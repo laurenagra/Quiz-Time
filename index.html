@@ -4,10 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <title>Test Your Knowledge!</title>
 </head>
 <body>
-    <button id="start-btn">Begin</button>
+    <header>
+        <div class= "large-font">Javascript Quiz</div>
+        <button class="start-btn">Start</button>
+      </header>
+    <main>
+        <section>
+          <div class="card questions">
+            <div class="large-font word-blanks">J _ v _ S c r_ _t</div>
+          </div>
+        </section>
+  
+        <section>
+          <div class="card results">
+            <div class = "win-loss-container">
+            <div>
+            <h2>Wins: <span class="win">0 </span> </h2>
+            <h2>Losses: <span class="lose">0</span></h2>
+          </div>
+            <button class="reset-button">Reset Score</button>
+        </div>
+            <div class= "card timer">
+              <div class = "timer-text">
+              <div class="large-font timer-count">75</div>
+              <h3>seconds remaining</h3>
+            </div>
+          
+            </div>
+          </div>
+        </section>
+      </main>
     <script src="./index.js"></script>
 </body>
 </html>
