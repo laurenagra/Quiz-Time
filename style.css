@@ -36,7 +36,7 @@
       rgba(210, 60, 106) 100% 
     ); 
     border-radius: 8px;
-    color: #13293d;
+    color: white;
     cursor: pointer;
     font-size: 2em;
     letter-spacing: 0.21px;
@@ -82,7 +82,7 @@
     height: 400px;
   }
   
-  .card {
+  #card-questions, #card-results, #choices{
     background: 
       rgba(60, 210, 164);
     border: 1px solid #eceff1;
@@ -91,6 +91,13 @@
       rgba(60, 64, 67, 0.15) 0 2px 4px 3px;
     margin: auto;
     padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .btn-color{
+    font-size: smaller;
   }
   
   .word-blanks {

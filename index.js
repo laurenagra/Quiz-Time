@@ -1,7 +1,3 @@
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// THEN a timer starts and I am presented with a question
-
 //Objects must determine which answers are correct
 //Interval- check through code from class for syntax
 //if 60 seconds take 5 seconds off for a wrong answer
@@ -15,7 +11,7 @@ var chosenQ = " ";
 var numAns = 0;
 var winCounter = 0;
 var loseCounter = 0;
-var isWin = false; 
+var isWin = false;
 var timer;
 var timerCount = 75;
 
@@ -25,167 +21,197 @@ var ansChoice = [];
 
 //Array of questions I want asked as well as the correct answers
 var questions = [
-    {
-        text: 'Which of the following type of variable takes precedence over other if names are same?',
-        choices: ['A - global variable',
+  {
+    text: "Which of the following type of variable takes precedence over other if names are same?",
+    choices: [
+      "A - global variable",
 
-        'B - local variable',
-        
-        'C - Both of the above.',
-        
-        'D - None of the above.'],
-        correct: 'B - local variable'
-    },
-    {
-        text: 'All user-defined objects and built-in objects are descendants of an object called Object?',
-        choices: [ 
-            'A - true',
-            'B - false'],
-        correct: 'A - true'
-    }, 
-    { 
-        text: 'Which of the following function of Number object returns a string value version of the current number in a format that may vary according to a browsers locale settings?',
-        choices: [ 'A - toExponential()',
+      "B - local variable",
 
-            'B - toFixed()',
+      "C - Both of the above.",
 
-            'C - toLocaleString()',
+      "D - None of the above.",
+    ],
+    answer: "B - local variable",
+  },
+  {
+    text: "All user-defined objects and built-in objects are descendants of an object called Object?",
+    choices: ["A - true", "B - false"],
+    answer: "A - true",
+  },
+  {
+    text: "Which of the following function of Number object returns a string value version of the current number in a format that may vary according to a browsers locale settings?",
+    choices: [
+      "A - toExponential()",
 
-            'D - toString()'
-            ],
-            correct: 'C - toLocaleString()'
-    },
-    {
-        text: 'Which of the following function of String object returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order?',
-        choices: ['A - localeCompare()',
-            'B - search()',
-        
-            'C - substr()',
-        
-            'D - concat()',
-         ],
-         correct: 'A - localeCompare()'
-    },
-    {
-        text: 'Which of the following function of Array object returns the last (greatest) index of an element within the array equal to the specified value, or -1 if none is found?',
-        choices: [ 'A - indexOf()',
+      "B - toFixed()",
 
-            'B - join()',
-            
-            'C - lastIndexOf()',
-            
-            'D - map()'
-        ],
-        correct: 'C - lastIndexOf()'
-    }
-]
+      "C - toLocaleString()",
+
+      "D - toString()",
+    ],
+    answer: "C - toLocaleString()",
+  },
+  {
+    text: "Which of the following function of String object returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order?",
+    choices: [
+      "A - localeCompare()",
+      "B - search()",
+
+      "C - substr()",
+
+      "D - concat()",
+    ],
+    answer: "A - localeCompare()",
+  },
+  {
+    text: "Which of the following function of Array object returns the last (greatest) index of an element within the array equal to the specified value, or -1 if none is found?",
+    choices: ["A - indexOf()", "B - join()", "C - lastIndexOf()", "D - map()"],
+    answer: "C - lastIndexOf()",
+  },
+];
 
 function init() {
-    getWins();
-    getLosses();
+  getWins();
+  getLosses();
 }
 
 function quiz() {
-    console.log("Boop");
-    isWin = false;
-    timerCount = 75;
-    startQuiz.disabled = true;
-    renderQ();
-    startTimer();
+  console.log("Boop");
+  isWin = false;
+  timerCount = 75;
+  startQuiz.disabled = true;
+  renderQ();
+  startTimer();
 }
 
 //correct function called when the "win condition" is met
-function correct(){
-    wordBlank.textContent = "That's correct!"
-    winCounter++
-    quiz.disabled = false;
-    setWins()
+function correct() {
+  wordBlank.textContent = "That's correct!";
+  winCounter++;
+  quiz.disabled = false;
+  setWins();
 }
 
 //the incorrect function is called when timer reaches 0
 function incorrect() {
-    wordBlank.textContent = "Incorrect!"
-    loseCounter++
-    startQuiz.disabled = false;
-    setLosses()
+  wordBlank.textContent = "Incorrect!";
+  loseCounter++;
+  startQuiz.disabled = false;
+  setLosses();
 }
 
 //Timer function
-function startTimer(){
-    timer = setInterval(function() {
-        timerCount--;
-        timerEl.textCount = timerCount;
-        if (timerCount >= 0) {
-            if (isWin && timerCount > 0){
-                clearInterval(timer);
-                correct();
-            }
-        }
-        if (timerCount === 0) {
-            clearInterval(timer);
-            incorrect();
-        }
-    }, 1000);
+function startTimer() {
+  timer = setInterval(function () {
+    timerCount--;
+    timerEl.textCount = timerCount;
+    if (timerCount >= 0) {
+      if (isWin && timerCount > 0) {
+        clearInterval(timer);
+        correct();
+      }
+    }
+    if (timerCount === 0) {
+      clearInterval(timer);
+      incorrect();
+    }
+    console.log(timerCount);
+  }, 1000);
 }
 
 //Create the questions on the screen!
-function renderQ(){
-    //Randomly pick a question from the array
-    chosenQ = questions[Math.floor(Math.random() * questions.length)];
-    ansToQ = chosenQ.split('');
-    numAns = ansToQ.length;
-    ansChoice = []
-    for (var i = 0; i < numAns; i++){
-        ansChoice.push("_");
-    }
-    //Convert questionEl array into a string to render it on screen
-    questionEl.textContent = ansChoice.join("");
+function renderQ() {
+  //Randomly pick a question from the array
+  chosenQ = questions[Math.floor(Math.random() * questions.length)];
+  console.log(chosenQ.choices);
+  var myQuestion = document.getElementById("card-questions");
+  console.log(myQuestion);
+  var choicesEl = document.getElementById("choices");
+  myQuestion.textContent = chosenQ.text;
+  chosenQ.choices.forEach((element) => {
+    var listItem = document.createElement("button");
+    listItem.setAttribute("class", "btn-color");
+    listItem.innerHTML = element;
+    choicesEl.appendChild(listItem);
+  });
+
+  if (chosenQ.answer === userChoice) {
+    console.log(correct);
+  }
+  numAns = ansToQ.length;
+  ansChoice = [];
+  for (var i = 0; i < numAns; i++) {
+    ansChoice.push("_");
+  }
+  //Convert questionEl array into a string to render it on screen
+  questionEl.textContent = ansChoice.join("");
 }
 
 //Update the correct count on screen and sets count to client storage
-function setCorrect(){
-    correct.textContent = winCounter;
-    localStorage.setItem("winCount", winCounter);
+function setCorrect() {
+  correct.textContent = winCounter;
+  localStorage.setItem("winCount", winCounter);
 }
 
 //Update the incorrect count on tscreen and set count to client storage
-function setInccorect(){
-    incorrect.textContent = loseCounter;
-    localStorage.setItem("loseCount", loseCounter);
+function setInccorect() {
+  incorrect.textContent = loseCounter;
+  localStorage.setItem("loseCount", loseCounter);
 }
 
 //Check local storage for previous wins and losses
-function getWins(){
-    var storedWins = localStorage.getItem("winCount");
-    if (storedWins === null){
-        winCounter = 0;
-    } else {
-        winCounter = storedWins;
-    }
-    //Render count to screen
-    correct.textContent = winCounter;
+function getWins() {
+  var storedWins = localStorage.getItem("winCount");
+  if (storedWins === null) {
+    winCounter = 0;
+  } else {
+    winCounter = storedWins;
+  }
+  //Render count to screen
+  correct.textContent = winCounter;
 }
 
-function getLosses(){
-    var storedLosses = localStorage.getItem("loseCount")
-    if (storedLosses === null){
-        loseCounter = 0;
-    } else {
-        loseCounter = storedLosses;
-    }
-    incorrect.textContent = loseCounter;
+function getLosses() {
+  var storedLosses = localStorage.getItem("loseCount");
+  if (storedLosses === null) {
+    loseCounter = 0;
+  } else {
+    loseCounter = storedLosses;
+  }
+  incorrect.textContent = loseCounter;
 }
 
-function checkWin(){
-    if (chosenQ === ansChoice.join("")){
-        isWin = true;
-    }
+function checkWin() {
+  if (chosenQ === ansChoice.join("")) {
+    isWin = true;
+  }
 }
 
+//Test if the guess answer is correct and render it to the screen
+function checkAnswer(questions, answer) {
+  var answer = false;
+  for (var i = 0; i < numAns; i++) {
+    if (chosenQ[i] === answer) answer = true;
+  }
+}
 
-//Adds event listener 
+//Adds event listener
 startQuiz.addEventListener("click", quiz);
 
+//Reset your quiz
+var resetButton = document.querySelector(".reset-button");
+
+function resetQuiz() {
+  // Resets win and loss counts
+  winCounter = 0;
+  loseCounter = 0;
+  // Renders win and loss counts and sets them into client storage
+  setWins();
+  setLosses();
+}
+// Attaches event listener to button
+resetButton.addEventListener("click", resetQuiz);
 
 // WHEN I answer a question
 // THEN I am presented with another question
