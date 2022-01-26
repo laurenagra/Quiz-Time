@@ -1,6 +1,6 @@
 var questions = [
   {
-      id: 1,
+    id: 1,
     text: "Which of the following type of variable takes precedence over other if names are same?",
     choices: [
       "A - global variable",
@@ -14,13 +14,13 @@ var questions = [
     answer: "B - local variable",
   },
   {
-      id: 2,
+    id: 2,
     text: "All user-defined objects and built-in objects are descendants of an object called Object?",
     choices: ["A - true", "B - false"],
     answer: "A - true",
   },
   {
-      id: 3,
+    id: 3,
     text: "Which of the following function of Number object returns a string value version of the current number in a format that may vary according to a browsers locale settings?",
     choices: [
       "A - toExponential()",
@@ -34,7 +34,7 @@ var questions = [
     answer: "C - toLocaleString()",
   },
   {
-      id: 4,
+    id: 4,
     text: "Which of the following function of String object returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order?",
     choices: [
       "A - localeCompare()",
@@ -47,7 +47,7 @@ var questions = [
     answer: "A - localeCompare()",
   },
   {
-      id: 5,
+    id: 5,
     text: "Which of the following function of Array object returns the last (greatest) index of an element within the array equal to the specified value, or -1 if none is found?",
     choices: ["A - indexOf()", "B - join()", "C - lastIndexOf()", "D - map()"],
     answer: "C - lastIndexOf()",
@@ -86,9 +86,10 @@ function quiz() {
 
 var timer = document.querySelector(".timer-count");
 var timerCount = 50;
+var timerInterval;
 //Timer function
 function startTimer() {
-  var timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     timerCount--;
     timer.textContent = timerCount;
     if (timerCount >= 0) {
@@ -112,10 +113,12 @@ var questionIndex = 0;
 
 //Sets timer count, once you press start button it disables the start button, renders the questions, and then starts timer
 function renderQ() {
+  if (questionIndex >= questions.length) {
+    return;
+  }
   //Randomly pick a question from the array
   chosenQ = questions[questionIndex];
   questionIndex++;
-  console.log(chosenQ.choices);
   var myQuestion = document.getElementById("card-questions");
   console.log(myQuestion);
   var choicesEl = document.getElementById("choices");
@@ -129,9 +132,9 @@ function renderQ() {
     listItem.addEventListener("click", function (e) {
       //renderQuestion() increments question index before event listener fires
       var currentQuestion = chosenQ;
-      correct = currentQuestion.answer;
+      var correct = currentQuestion.answer;
       userChoice = e.target.textContent;
-      checkAnswer(userChoice, answer);
+      checkAnswer(userChoice, correct);
       console.log(correct);
     });
   });
@@ -144,9 +147,8 @@ function renderQ() {
 
 //Check answer function
 function checkAnswer(userChoice, answer) {
-  if(timerCount === 0)
-  {
-      return;
+  if (timerCount === 0) {
+    return;
   }
   var rightOrWrong = document.getElementById("card-questions");
   if (userChoice === answer) {
@@ -158,29 +160,39 @@ function checkAnswer(userChoice, answer) {
     if (timerCount > 0) {
       timerCount = Math.floor(timerCount / 1.25);
     }
-  } 
+  }
   if (questionIndex === questions.length) {
-      endGame();
+    endGame();
   }
   var answer = false;
   for (var i = 0; i < numAns; i++) {
     if (chosenQ[i] === answer) answer = true;
   }
-  setTimeout(function(){
+  setTimeout(function () {
     renderQ();
   }, 1000);
 }
 
+function toggleElement(idName, display) {
+  var element = document.getElementById(idName);
+  if (display == "hide") {
+    element.style.display = "none";
+  }
+  if (display == "show") {
+    element.style.display = "flex";
+  }
+}
 
 var finalScore;
 function endGame() {
-  clearInterval(timer);
+  clearInterval(timerInterval);
   //display remaining time as final score w/ button linked to new html page.
   var submitEl = document.getElementById("submit-score");
   var headerEl = document.getElementById("header");
-  var cardwrapEl = document.querySelector("card-questions");
-  cardwrapEl.style.display = "none";
-  submitEl.style.display = "flex";
+  var cardwrapEl = document.getElementById("card-questions");
+  toggleElement("card-questions", "hide");
+  toggleElement("choices", "hide");
+  toggleElement("submit-score", "show");
   finalScore = timerCount;
 
   submitEl.setAttribute(
@@ -196,7 +208,7 @@ function endGame() {
 function scoreInput(finalScore) {
   var submit = document.getElementById("button-addon2");
   var initials = document.getElementById("initials");
-
+  console.log("submitted score");
   submit.addEventListener("click", function (e) {
     e.preventDefault();
     var savedScores;
@@ -221,3 +233,24 @@ function scoreInput(finalScore) {
     }
   });
 }
+
+var resetButton = document.querySelector(".reset-button");
+var win = document.getElementsByClassName("win");
+var lose = document.getElementsByClassName("lose");
+
+function resetGame() {
+  win[0].textContent = "0";
+  lose[0].textContent = "0";
+  localStorage.removeItem("win");
+  localStorage.removeItem("lose");
+  clearInterval(timerInterval);
+  toggleElement("submit-score", "hide");
+  timer.textContent = 50;
+  timerCount = 50;
+  startQuiz.disabled = false;
+  questionIndex = 0;
+  toggleElement("card-questions", "hide");
+  toggleElement("choices", "hide");
+}
+
+resetButton.addEventListener("click", resetGame);

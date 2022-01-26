@@ -1,4 +1,8 @@
-var scoresArray = JSON.parse(localStorage.getItem("localHighScores"));
+var scoresArray = JSON.parse(localStorage.getItem("scores"));
+if(scoresArray == null)
+{
+    scoresArray = [];
+}
         
 function printAndShowLeaderboard() {
     var scoresList = document.querySelector("#scoresList");
