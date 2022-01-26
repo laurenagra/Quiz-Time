@@ -1,6 +1,11 @@
 # Quiz-Time
 ## Table of Contents
-> 
+- [General Info](#general-info)
+- [Website](#website)
+- [Screenshots](#screenshots)
+- [Code](#code)
+- [Status](#status)
+- [Inspired By](#inspiration)
 
 
 ## General Info
@@ -16,3 +21,10 @@
 - HTML
 - CSS
 - Javascript
+
+## Status
+Project is incomplete as of Jan 24
+
+## Inspiration
+- GA Tech Bootcamp Homework 4
+- Mini Project 4
