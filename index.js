@@ -1,26 +1,3 @@
-//Objects must determine which answers are correct
-//Interval- check through code from class for syntax
-//if 60 seconds take 5 seconds off for a wrong answer
-var startQuiz = document.getElementById("start-btn");
-var win = document.querySelector(".win");
-var lose = document.querySelector(".lose");
-//var timerEl = document.querySelector(".timer-count");
-var questionEl = document.querySelector(".quest");
-
-var chosenQ = " ";
-var numAns = 0;
-var winCounter = 0;
-var loseCounter = 0;
-var isWin = false;
-var timer = document.querySelector(".timer-count");
-var timerCount = 50;
-var userChoice = "";
-
-//Array used to create question and answers on screen
-var ansToQ = [];
-var ansChoice = [];
-
-//Array of questions I want asked as well as the correct answers
 var questions = [
   {
     text: "Which of the following type of variable takes precedence over other if names are same?",
@@ -72,10 +49,42 @@ var questions = [
   },
 ];
 
-//Check user's local storage for previous scores
-function init() {
-  getWins();
-  getLosses();
+var isWin = false;
+var startQuiz = document.getElementById("start-btn");
+//Event listener
+startQuiz.addEventListener("click", quiz);
+//Calls quiz function
+
+//correct function called when the "win condition" is met
+function correct() {
+  wordBlank.textContent = "That's correct!";
+  winCounter++;
+  quiz.disabled = false;
+  //setWins();
+}
+
+//the incorrect function is called when timer reaches 0
+function incorrect() {
+  wordBlank.textContent = "Incorrect!";
+  loseCounter++;
+  startQuiz.disabled = false;
+  //setLosses();
+}
+
+//Update the correct count on screen and sets count to client storage
+function setCorrect() {
+  var correct = document.querySelector(".win");
+  var currentCorrect = parseInt(correct.textContent);
+  correct.textContent = currentCorrect + 1;
+  localStorage.setItem("win", currentCorrect + 1);
+}
+
+//Update the incorrect count on tscreen and set count to client storage
+function setInccorect() {
+  var incorrect = document.querySelector(".lose");
+  var currentIncorrect = parseInt(incorrect.textContent);
+  incorrect.textContent = currentIncorrect + 1;
+  localStorage.setItem("lose", currentIncorrect + 1);
 }
 
 function quiz() {
@@ -87,138 +96,92 @@ function quiz() {
   startTimer();
 }
 
-//correct function called when the "win condition" is met
-function correct() {
-  wordBlank.textContent = "That's correct!";
-  winCounter++;
-  quiz.disabled = false;
-  setWins();
-}
-
-//the incorrect function is called when timer reaches 0
-function incorrect() {
-  wordBlank.textContent = "Incorrect!";
-  loseCounter++;
-  startQuiz.disabled = false;
-  setLosses();
-}
-
+var timer = document.querySelector(".timer-count");
+var timerCount = 50;
 //Timer function
 function startTimer() {
   var timerInterval = setInterval(function () {
     timerCount--;
-    timer.textContent = timerCount + "seconds remaining";
+    timer.textContent = timerCount;
     if (timerCount >= 0) {
       if (isWin && timerCount > 0) {
-        correct();
+        //correct();
       }
     }
     if (timerCount === 0) {
       clearInterval(timerInterval);
-      incorrect();
+      //incorrect();
     }
-    console.log(timerCount);
+    //console.log(timerCount);
   }, 1000);
 }
 
-//Create the questions on the screen!
+var chosenQ = " ";
+var numAns = 0;
+var ansToQ = [];
+var ansChoice = [];
+var questionIndex;
+
+//Sets timer count, once you press start button it disables the start button, renders the questions, and then starts timer
 function renderQ() {
   //Randomly pick a question from the array
   chosenQ = questions[Math.floor(Math.random() * questions.length)];
+  questionIndex = chosenQ[i];
   console.log(chosenQ.choices);
   var myQuestion = document.getElementById("card-questions");
   console.log(myQuestion);
   var choicesEl = document.getElementById("choices");
+  choicesEl.innerHTML = "";
   myQuestion.textContent = chosenQ.text;
   chosenQ.choices.forEach((element) => {
     var listItem = document.createElement("button");
     listItem.setAttribute("class", "btn-color");
     listItem.innerHTML = element;
     choicesEl.appendChild(listItem);
+    listItem.addEventListener("click", function (e) {
+      //renderQuestion() increments question index before event listener fires
+      var currentQuestion = chosenQ;
+      correct = currentQuestion.answer;
+      userChoice = e.target.textContent;
+      checkAnswer(userChoice, correct);
+      console.log(correct);
+    });
   });
-
-  if (chosenQ.answer === userChoice) {
-    console.log(correct);
-  }
   numAns = ansToQ.length;
   ansChoice = [];
   for (var i = 0; i < numAns; i++) {
     ansChoice.push("_");
   }
-  //Convert questionEl array into a string to render it on screen
-  questionEl.textContent = ansChoice.join("");
 }
 
-//Update the correct count on screen and sets count to client storage
-function setCorrect() {
-  correct.textContent = winCounter;
-  localStorage.setItem("winCount", winCounter);
-}
+//   for (var i = 0; i < listItem.length; i++) {
+//     // listItem[i].addEventListener("click", function (e){
+//     // //renderQuestion() increments question index before event listener fires
+//     // var currentQuestion = questions[choices];
+//     // correct = currentQuestion.choices[currentQuestion.answer];
+//     // userChoice = e.target.textContent
+//     // checkAnswer (userChoice, answer);
+//     // });
+//     }
 
-//Update the incorrect count on tscreen and set count to client storage
-function setInccorect() {
-  incorrect.textContent = loseCounter;
-  localStorage.setItem("loseCount", loseCounter);
-}
-
-//Check local storage for previous wins and losses
-function getWins() {
-  var storedWins = localStorage.getItem("winCount");
-  if (storedWins === null) {
-    winCounter = 0;
+//Check answer function
+function checkAnswer(userChoice, answer) {
+  console.log(userChoice);
+  console.log(answer);
+  var rightOrWrong = document.getElementById("card-questions");
+  if (userChoice === answer) {
+    rightOrWrong.textContent = "Correct! :D";
+    setCorrect();
   } else {
-    winCounter = storedWins;
+    rightOrWrong.textContent = "Incorrect, please try again";
+    setInccorect();
+    if (timerCount > 0) {
+      timerCount = Math.floor(timerCount / 1.25);
+    }
   }
-  //Render count to screen
-  correct.textContent = winCounter;
-}
-
-function getLosses() {
-  var storedLosses = localStorage.getItem("loseCount");
-  if (storedLosses === null) {
-    loseCounter = 0;
-  } else {
-    loseCounter = storedLosses;
-  }
-  incorrect.textContent = loseCounter;
-}
-
-function checkWin() {
-  if (chosenQ === ansChoice.join("")) {
-    isWin = true;
-  }
-}
-
-//Test if the guess answer is correct and render it to the screen
-function checkAnswer(questions, answer) {
   var answer = false;
   for (var i = 0; i < numAns; i++) {
     if (chosenQ[i] === answer) answer = true;
   }
+  renderQ();
 }
-
-//Adds event listener
-startQuiz.addEventListener("click", quiz);
-
-//Reset your quiz
-var resetButton = document.querySelector(".reset-button");
-
-function resetQuiz() {
-  // Resets win and loss counts
-  winCounter = 0;
-  loseCounter = 0;
-  // Renders win and loss counts and sets them into client storage
-  setWins();
-  setLosses();
-}
-// Attaches event listener to button
-resetButton.addEventListener("click", resetQuiz);
-
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and my score

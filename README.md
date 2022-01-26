@@ -28,3 +28,6 @@ Project is incomplete as of Jan 24
 ## Inspiration
 - GA Tech Bootcamp Homework 4
 - Mini Project 4
+
+## Contributers 
+- Alex Harkins
