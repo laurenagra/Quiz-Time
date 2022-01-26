@@ -49,7 +49,10 @@
     transition-timing-function: linear;
     margin-top: 0.6em;
   }
-  
+  .navbar-brand{
+    color:whitesmoke;
+  }
+
   header {
     padding: 40px;
     text-align: center;
@@ -112,6 +115,10 @@
   
   .timer-text {
     padding: 55px;
+  }
+
+ #submit-score {
+    display:none;
   }
   
   @media screen and (max-width: 1183px) {
