@@ -20,7 +20,7 @@ body {
   font-size: 16px;
   height: 30px;
   line-height: 8px;
-  margin-top: 20px;
+  margin-left: 20px;
 }
 
 .win-loss-container {
@@ -68,7 +68,7 @@ main {
 }
 
 section {
-  flex: 0 auto;
+  flex: 0 0 50%;
   padding: 8px;
   margin-top: 50px;
   background-color: white;
@@ -78,6 +78,12 @@ section {
 .results {
   width: 30vw;
   height: 400px;
+}
+
+.section-container{
+  display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 #card-questions,
@@ -145,7 +151,9 @@ section {
 
   .reset-button {
     font-size: 12px;
-    width: 20ox;
+    width: 20px;
+    margin: 10px;
+    padding: 10px;
   }
 
   .timer {
