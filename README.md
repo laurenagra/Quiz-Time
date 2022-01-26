@@ -23,11 +23,11 @@
 - Javascript
 
 ## Status
-Project is incomplete as of Jan 24
+Project is complete as of Jan 26th, 2022
 
 ## Inspiration
 - GA Tech Bootcamp Homework 4
 - Mini Project 4
 
 ## Contributers 
-- Alex Harkins
+- [Alex Harkins](https://github.com/amachkel)

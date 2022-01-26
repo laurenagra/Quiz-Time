@@ -137,6 +137,8 @@ function renderQ() {
       checkAnswer(userChoice, correct);
       console.log(correct);
     });
+    toggleElement("card-questions", "show");
+  toggleElement("choices", "show");
   });
   numAns = ansToQ.length;
   ansChoice = [];
