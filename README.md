@@ -6,7 +6,7 @@
 - [Code](#code)
 - [Status](#status)
 - [Inspired By](#inspiration)
-
+- [Contributers](#contributers)
 
 ## General Info
 >A JavaScript Quiz with multiple choice questions, a timer, and high scores!
