@@ -4,7 +4,7 @@
 var startQuiz = document.getElementById("start-btn");
 var win = document.querySelector(".win");
 var lose = document.querySelector(".lose");
-var timerEl = document.querySelector(".timer-count");
+//var timerEl = document.querySelector(".timer-count");
 var questionEl = document.querySelector(".quest");
 
 var chosenQ = " ";
@@ -12,10 +12,11 @@ var numAns = 0;
 var winCounter = 0;
 var loseCounter = 0;
 var isWin = false;
-var timer;
-var timerCount = 75;
+var timer = document.querySelector(".timer-count");
+var timerCount = 50;
+var userChoice = "";
 
-//Array used to create question and answers on screen?
+//Array used to create question and answers on screen
 var ansToQ = [];
 var ansChoice = [];
 
@@ -71,6 +72,7 @@ var questions = [
   },
 ];
 
+//Check user's local storage for previous scores
 function init() {
   getWins();
   getLosses();
@@ -79,7 +81,7 @@ function init() {
 function quiz() {
   console.log("Boop");
   isWin = false;
-  timerCount = 75;
+  timerCount = 50;
   startQuiz.disabled = true;
   renderQ();
   startTimer();
@@ -103,17 +105,16 @@ function incorrect() {
 
 //Timer function
 function startTimer() {
-  timer = setInterval(function () {
+  var timerInterval = setInterval(function () {
     timerCount--;
-    timerEl.textCount = timerCount;
+    timer.textContent = timerCount + "seconds remaining";
     if (timerCount >= 0) {
       if (isWin && timerCount > 0) {
-        clearInterval(timer);
         correct();
       }
     }
     if (timerCount === 0) {
-      clearInterval(timer);
+      clearInterval(timerInterval);
       incorrect();
     }
     console.log(timerCount);

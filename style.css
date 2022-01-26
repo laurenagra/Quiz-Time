@@ -72,11 +72,6 @@
     border-radius: 8px;
   }
   
-  .word-guess {
-    width: 55vw;
-    height: 400px;
-  }
-  
   .results {
     width: 30vw;
     height: 400px;
@@ -100,9 +95,6 @@
     font-size: smaller;
   }
   
-  .word-blanks {
-    line-height: 360px;
-  }
   
   .large-font {
     font-size: 3.5em;
@@ -113,6 +105,7 @@
     height: 240px;
     padding: 10px;
     background: rgba(93, 6, 132);
+    margin: 10px;
     color: #fff;
     text-align: center;
   }
