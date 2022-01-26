@@ -16,6 +16,8 @@
 
 ## Screenshots
 ![This is an image](./java-quiz.png)
+![Highscore page!](./quiz-highscore.png)
+
 
 ## Code
 - HTML
